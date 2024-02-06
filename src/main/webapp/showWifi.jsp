@@ -1,5 +1,5 @@
 <!-- showWifi.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>서울시 공공 와이파이 정보</title>
