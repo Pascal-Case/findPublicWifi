@@ -22,7 +22,7 @@ public class WifiDataService {
             conn.setAutoCommit(false);
 
             for (WifiInfo wifiInfo : wifiInfoList) {
-                wifiInfoDao.insertWifiInfo(conn, wifiInfo);
+                wifiInfoDao.upsertWifiInfo(conn, wifiInfo);
             }
 
             conn.commit();
