@@ -101,13 +101,13 @@ public class WifiInfoDao {
     }
 
     /**
-     * 와이파이 정보 등록
+     * 와이파이 정보 등록 (이미 등록된 와이파이는 정보 갱신)
      *
      * @param conn     컨넥션 객체
      * @param wifiInfo 와이파이 정보 객체
      */
-    public void insertWifiInfo(Connection conn, WifiInfo wifiInfo) throws SQLException {
-        String sql = "INSERT INTO WIFI_INFO (" +
+    public void upsertWifiInfo(Connection conn, WifiInfo wifiInfo) throws SQLException {
+        String sql = "INSERT OR REPLACE INTO WIFI_INFO (" +
                 "X_SWIFI_MGR_NO, " +
                 "X_SWIFI_WRDOFC, " +
                 "X_SWIFI_MAIN_NM, " +
