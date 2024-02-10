@@ -48,3 +48,6 @@ docs/ERD/.metadata
 
 *.pem
 *.key
+
+seoulWifi.json
+/src/main/java/com/example/findpublicwifi
