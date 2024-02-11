@@ -1,6 +1,7 @@
-package controller.command;
+package controller.command.WifiInfo;
 
 import com.example.findpublicwifi.Api_demo;
+import controller.command.Command;
 import model.WifiData;
 import service.WifiDataService;
 

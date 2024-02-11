@@ -1,5 +1,6 @@
-package controller.command;
+package controller.command.WifiInfo;
 
+import controller.command.Command;
 import model.WifiSpot;
 import service.HistoryService;
 import service.WifiDataService;

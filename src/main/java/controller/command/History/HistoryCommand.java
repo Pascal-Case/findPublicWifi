@@ -1,5 +1,6 @@
-package controller.command;
+package controller.command.History;
 
+import controller.command.Command;
 import model.History;
 import service.HistoryService;
 

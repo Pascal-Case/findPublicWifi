@@ -1,6 +1,7 @@
-package controller.command;
+package controller.command.History;
 
 import com.google.gson.JsonObject;
+import controller.command.Command;
 import service.HistoryService;
 
 import javax.servlet.ServletException;
