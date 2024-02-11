@@ -1,6 +1,6 @@
-package servlet;
+package controller;
 
-import servlet.command.*;
+import controller.command.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +24,7 @@ public class FrontControllerServlet extends HttpServlet {
         commandMap.put("/bookmarkGroup", new BookmarkGroupCommand());
 
         commandMap.put("/getWifiData", new SeoulWifiCommand());
+        commandMap.put("/searchWifi", new SearchWifiCommand());
 
     }
 

@@ -1,4 +1,4 @@
-package servlet.command;
+package controller.command;
 
 import com.example.findpublicwifi.Api_demo;
 import model.WifiData;
