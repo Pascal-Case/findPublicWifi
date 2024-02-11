@@ -7,9 +7,9 @@
 <head>
     <title>JSP - Hello World</title>
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/general.css?v=<%=System.currentTimeMillis()%>">
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/home.css?v=<%=System.currentTimeMillis()%>">
+          href="${pageContext.request.contextPath}/resources/css/general.css">
+    <%--    <link rel="stylesheet"--%>
+    <%--          href="${pageContext.request.contextPath}/resources/css/home.css">--%>
 </head>
 <body>
 <header>

@@ -22,6 +22,7 @@ public class WifiInfoDao {
      * @param userLnt 사용자의 경도
      * @param limit   가져올 와이파이 스팟의 최대 개수
      * @return 와이파이 스팟 리스트
+     * @throws SQLException SQL 예외
      */
     public List<WifiSpot> getWifiSpotList(Connection conn, double userLat, double userLnt, int limit) throws SQLException {
         List<WifiSpot> wifiSpotList = new ArrayList<>();
@@ -90,21 +91,11 @@ public class WifiInfoDao {
     }
 
     /**
-     * 와이파이 정보 전체 삭제 (갱신시 실행)
-     */
-    public void deleteAllWifiInfo(Connection conn) throws SQLException {
-        String sql = "DELETE FROM WIFI_INFO";
-
-        try (PreparedStatement pStatement = conn.prepareStatement(sql)) {
-            pStatement.executeUpdate();
-        }
-    }
-
-    /**
      * 와이파이 정보 등록 (이미 등록된 와이파이는 정보 갱신)
      *
      * @param conn     컨넥션 객체
      * @param wifiInfo 와이파이 정보 객체
+     * @throws SQLException SQL 예외
      */
     public void upsertWifiInfo(Connection conn, WifiInfo wifiInfo) throws SQLException {
         String sql = "INSERT OR REPLACE INTO WIFI_INFO (" +

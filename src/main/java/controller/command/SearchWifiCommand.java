@@ -1,6 +1,7 @@
 package controller.command;
 
 import model.WifiSpot;
+import service.HistoryService;
 import service.WifiDataService;
 
 import javax.servlet.RequestDispatcher;
@@ -13,9 +14,11 @@ import java.util.List;
 public class SearchWifiCommand implements Command {
 
     private final WifiDataService wifiDataService;
+    private final HistoryService historyService;
 
     public SearchWifiCommand() {
         wifiDataService = new WifiDataService();
+        historyService = new HistoryService();
     }
 
     @Override
@@ -42,6 +45,9 @@ public class SearchWifiCommand implements Command {
 
         // wifi 데이터 가져오기
         List<WifiSpot> wifiSpots = wifiDataService.getWifiSpotData(lat, lnt, 20);
+
+        // history 저장
+        historyService.saveHistory(lat, lnt);
 
         request.setAttribute("wifiSpots", wifiSpots);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
