@@ -4,6 +4,7 @@
     <title>Page Not Found</title>
     <style>
         .message {
+            text-align: center;
             margin: 20px auto;
             font-size: 24px;
         }

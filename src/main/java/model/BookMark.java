@@ -1,23 +1,32 @@
 package model;
 
-import java.util.Date;
-
 public class BookMark {
     private Integer bookmarkId;
-    private String mgrNo;
-    private int groupId;
-    private String wifiName;
-    private String postDate;
+    private final String mgrNo;
+    private final int groupId;
+    private final String groupName;
+    private final int groupOrder;
+    private final String wifiName;
+    private final String postDate;
 
-    public BookMark(String mgrNo, int groupId, String wifiName, Date postDate) {
+    public BookMark(String mgrNo, int groupId, String groupName, int groupOrder, String wifiName, String postDate) {
         this.mgrNo = mgrNo;
         this.groupId = groupId;
+        this.groupName = groupName;
+        this.groupOrder = groupOrder;
         this.wifiName = wifiName;
-        this.postDate = postDate.toString();
+        this.postDate = postDate;
     }
 
-    public void setBookmarkId(Integer bookmarkId) {
+
+    public BookMark(Integer bookmarkId, String mgrNo, int groupId, String groupName, int groupOrder, String wifiName, String postDate) {
         this.bookmarkId = bookmarkId;
+        this.mgrNo = mgrNo;
+        this.groupId = groupId;
+        this.groupName = groupName;
+        this.groupOrder = groupOrder;
+        this.wifiName = wifiName;
+        this.postDate = postDate;
     }
 
     public Integer getBookmarkId() {
@@ -30,6 +39,14 @@ public class BookMark {
 
     public int getGroupId() {
         return groupId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public int getGroupOrder() {
+        return groupOrder;
     }
 
     public String getWifiName() {

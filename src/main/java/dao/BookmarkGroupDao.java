@@ -4,30 +4,48 @@ import model.BookmarkGroup;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookmarkGroupDao {
+    /**
+     * 북마크 그룹 리스트
+     *
+     * @param conn 컨넥션 객체
+     * @return 북마크 그룹 리스트
+     * @throws SQLException SQL 예외
+     */
+    public List<BookmarkGroup> getBookmarkGroupList(Connection conn) throws SQLException {
+        List<BookmarkGroup> bookmarkGroupList = new ArrayList<>();
+        String sql = "SELECT * FROM BOOKMARK_GROUP ORDER BY BOOKMARK_ORDER";
+        try (PreparedStatement pStatement = conn.prepareStatement(sql)) {
+
+            ResultSet rs = pStatement.executeQuery();
+            while (rs.next()) {
+                bookmarkGroupList.add(getBookmarkGroupObj(rs));
+            }
+        }
+        return bookmarkGroupList;
+    }
+
 
     /**
-     * 북마크 등록
+     * 북마크 그룹 등록
      *
      * @param conn          컨넥션 객체
      * @param bookmarkGroup 북마크 그룹
      * @throws SQLException SQL 예외
      */
-    public void registerBookmarkGroup(Connection conn, BookmarkGroup bookmarkGroup) throws SQLException {
+    public void addBookmarkGroup(Connection conn, BookmarkGroup bookmarkGroup) throws SQLException {
         String sql = "INSERT INTO BOOKMARK_GROUP (BOOKMARK_GROUP_NAME, BOOKMARK_ORDER, POST_DATE) " +
                 " VALUES (?, ?, ?)";
         try (PreparedStatement pStatement = conn.prepareStatement(sql)) {
             pStatement.setString(1, bookmarkGroup.getGroupName());
             pStatement.setInt(2, bookmarkGroup.getGroupOrder());
             pStatement.setString(3, bookmarkGroup.getPostDate());
-            int result = pStatement.executeUpdate();
-            if (result == 1) {
-
-            } else {
-
-            }
+            pStatement.executeUpdate();
         }
     }
 
@@ -50,13 +68,7 @@ public class BookmarkGroupDao {
             pStatement.setInt(2, bookmarkGroup.getGroupOrder());
             pStatement.setString(3, bookmarkGroup.getEditDate());
             pStatement.setInt(4, bookmarkGroup.getGroupId());
-
-            int result = pStatement.executeUpdate();
-            if (result == 1) {
-
-            } else {
-
-            }
+            pStatement.executeUpdate();
         }
     }
 
@@ -82,5 +94,38 @@ public class BookmarkGroupDao {
             groupStatement.setInt(1, bookMarkGroupId);
             groupStatement.executeUpdate();
         }
+    }
+
+    /**
+     * 특정 북마크 그룹 가져오기
+     *
+     * @param conn                  컨넥션 객체
+     * @param targetBookmarkGroupId 북마크 그룹 아이디
+     * @return 묵마크 그룹
+     */
+    public BookmarkGroup getBookmarkGroupDetail(Connection conn, int targetBookmarkGroupId) throws SQLException {
+        BookmarkGroup bookmarkGroup = null;
+        String sql = "SELECT * FROM BOOKMARK_GROUP WHERE BOOKMARK_GROUP_ID = ?";
+        try (PreparedStatement pStatement = conn.prepareStatement(sql)) {
+            pStatement.setInt(1, targetBookmarkGroupId);
+            ResultSet rs = pStatement.executeQuery();
+            while (rs.next()) {
+                bookmarkGroup = getBookmarkGroupObj(rs);
+            }
+        }
+        return bookmarkGroup;
+    }
+
+    private BookmarkGroup getBookmarkGroupObj(ResultSet rs) throws SQLException {
+        int bookmarkGroupId = rs.getInt("BOOKMARK_GROUP_ID");
+        String bookmarkGroupName = rs.getString("BOOKMARK_GROUP_NAME");
+        int bookmarkGroupOrder = rs.getInt("BOOKMARK_ORDER");
+        String postDate = rs.getString("POST_DATE");
+        String editDate = rs.getString("EDIT_DATE");
+        if (editDate == null) {
+            editDate = "";
+        }
+
+        return new BookmarkGroup(bookmarkGroupId, bookmarkGroupName, bookmarkGroupOrder, postDate, editDate);
     }
 }
