@@ -73,12 +73,12 @@
         deleteButtons.forEach(button => {
             button.addEventListener('click', function () {
                 const historyId = this.getAttribute('data-id');
-                console.log(historyId);
+
                 if (confirm('해당 히스토리를 삭제하시겠습니까?')) {
                     fetch('${pageContext.request.contextPath}/seoul-wifi/history-del', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                         },
                         body: 'historyId=' + historyId
                     })
@@ -88,7 +88,7 @@
                                 alert(data.message);
                                 window.location.reload();
                             } else {
-                                alert('삭제 실패: ' + data.message);
+                                alert(data.message);
                             }
                         })
                         .catch(error => console.error('Error:', error));

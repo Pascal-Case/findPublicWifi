@@ -40,20 +40,20 @@ public class WifiData {
 
     public static class TbPublicWifiInfo {
         @SerializedName("list_total_count")
-        private final int totalListCount;
+        private final int listTotalCount;
         @SerializedName("RESULT")
         private final Result result;
         @SerializedName("row")
         private final List<WifiInfo> row;
 
         public TbPublicWifiInfo(int totalListCount, Result result, List<WifiInfo> row) {
-            this.totalListCount = totalListCount;
+            this.listTotalCount = totalListCount;
             this.result = result;
             this.row = row == null ? Collections.emptyList() : row;
         }
 
-        public int getTotalListCount() {
-            return totalListCount;
+        public int getListTotalCount() {
+            return listTotalCount;
         }
 
         public Result getResult() {

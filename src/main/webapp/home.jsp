@@ -29,7 +29,7 @@
 
 <div class="container">
     <form action="${pageContext.request.contextPath}/seoul-wifi/searchWifi" method="get">
-        <div class="form-group">
+        <div class="form-group1">
             <label for="lat">위도(LAT) </label>
             <input type="text" id="lat" name="lat" required>
             <label for="lnt">경도(LNT) </label>
@@ -87,7 +87,9 @@
             <%= wifiInfo.getXSwifiWrdofc() %>
         </td>
         <td>
-            <%= wifiInfo.getXSwifiMainNm() %>
+            <a href="${pageContext.request.contextPath}/seoul-wifi/wifiDetail?mgrNo=<%= wifiInfo.getXSwifiMgrNo() %>">
+                <%= wifiInfo.getXSwifiMainNm() %>
+            </a>
         </td>
         <td>
             <%= wifiInfo.getXSwifiAdres1() %>
@@ -135,26 +137,29 @@
 </table>
 
 <script>
-    window.onload = function () {
-        const message = "<%= request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage") : "" %>";
+    document.addEventListener('DOMContentLoaded', function () {
+        const message = "<%= request.getAttribute("message") %>";
+        const success = "<%= request.getAttribute("success") %>";
         const messageContainer = document.getElementById("messageContainer");
-        if (message !== "") {
-            messageContainer.style.display = "block";
+
+        if (message !== "null") {
             messageContainer.textContent = message;
+            messageContainer.style.display = "block";
+            messageContainer.style.color = success === "true" ? "green" : "red";
         } else {
             messageContainer.style.display = "none";
-            messageContainer.textContent = "";
         }
 
         document.getElementById("getCurrentGeolocation").addEventListener("click", () => {
             navigator.geolocation.getCurrentPosition((position) => {
-                console.log(position.coords);
-                document.getElementById("lat").value = String(position.coords.latitude);
-                document.getElementById("lnt").value = String(position.coords.longitude);
-            })
-        })
-    };
+                document.getElementById("lat").value = position.coords.latitude.toFixed(6);
+                document.getElementById("lnt").value = position.coords.longitude.toFixed(6);
+            }, (error) => {
+                console.error('Geolocation Error:', error);
+                alert('위치 정보를 가져오는데 실패했습니다. 권한을 확인해주세요.');
+            });
+        });
+    });
 </script>
-
 </body>
 </html>

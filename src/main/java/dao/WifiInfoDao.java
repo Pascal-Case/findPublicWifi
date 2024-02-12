@@ -57,28 +57,9 @@ public class WifiInfoDao {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                String mgrNo = rs.getString("X_SWIFI_MGR_NO");
-                String wrdofc = rs.getString("X_SWIFI_WRDOFC");
-                String mainNm = rs.getString("X_SWIFI_MAIN_NM");
-                String adres1 = rs.getString("X_SWIFI_ADRES1");
-                String adres2 = rs.getString("X_SWIFI_ADRES2");
-                String instlFloor = rs.getString("X_SWIFI_INSTL_FLOOR");
-                String instlTy = rs.getString("X_SWIFI_INSTL_TY");
-                String instlMby = rs.getString("X_SWIFI_INSTL_MBY");
-                String svcSe = rs.getString("X_SWIFI_SVC_SE");
-                String cmcwr = rs.getString("X_SWIFI_CMCWR");
-                String cnstcYear = rs.getString("X_SWIFI_CNSTC_YEAR");
-                String inoutDoor = rs.getString("X_SWIFI_INOUT_DOOR");
-                String remars3 = rs.getString("X_SWIFI_REMARS3");
-                double lat = rs.getDouble("LAT");
-                double lnt = rs.getDouble("LNT");
-                String workDttm = rs.getString("WORK_DTTM");
+                WifiInfo wifiInfo = generateWifiInfoObj(rs);
+
                 double distance = rs.getDouble("distance");
-
-                // WifiInfo 객체 생성
-                WifiInfo wifiInfo = new WifiInfo(mgrNo, wrdofc, mainNm, adres1, adres2, instlFloor, instlTy,
-                        instlMby, svcSe, cmcwr, cnstcYear, inoutDoor, remars3, lat, lnt, workDttm);
-
                 // WifiSpot 객체 생성
                 WifiSpot wifiSpot = new WifiSpot(wifiInfo, distance);
 
@@ -140,4 +121,50 @@ public class WifiInfoDao {
     }
 
 
+    /**
+     * Wifi 상세 정보 가져오기
+     *
+     * @param conn        컨넥션 객체
+     * @param targetMgrNo 가져올 와이파이 정보 관리 번호
+     * @return 와이파이 정보
+     * @throws SQLException SQL 예외
+     */
+    public WifiInfo getWifiDetail(Connection conn, String targetMgrNo) throws SQLException {
+        String sql = "SELECT * FROM WIFI_INFO WHERE X_SWIFI_MGR_NO = ?";
+        WifiInfo wifiInfo = null;
+        try (PreparedStatement pStatement = conn.prepareStatement(sql)) {
+            pStatement.setString(1, targetMgrNo);
+            ResultSet rs = pStatement.executeQuery();
+
+            while (rs.next()) {
+                // WifiInfo 객체 생성
+                wifiInfo = generateWifiInfoObj(rs);
+
+            }
+        }
+
+        return wifiInfo;
+    }
+
+    private WifiInfo generateWifiInfoObj(ResultSet rs) throws SQLException {
+        String mgrNo = rs.getString("X_SWIFI_MGR_NO");
+        String wrdofc = rs.getString("X_SWIFI_WRDOFC");
+        String mainNm = rs.getString("X_SWIFI_MAIN_NM");
+        String adres1 = rs.getString("X_SWIFI_ADRES1");
+        String adres2 = rs.getString("X_SWIFI_ADRES2");
+        String instlFloor = rs.getString("X_SWIFI_INSTL_FLOOR");
+        String instlTy = rs.getString("X_SWIFI_INSTL_TY");
+        String instlMby = rs.getString("X_SWIFI_INSTL_MBY");
+        String svcSe = rs.getString("X_SWIFI_SVC_SE");
+        String cmcwr = rs.getString("X_SWIFI_CMCWR");
+        String cnstcYear = rs.getString("X_SWIFI_CNSTC_YEAR");
+        String inoutDoor = rs.getString("X_SWIFI_INOUT_DOOR");
+        String remars3 = rs.getString("X_SWIFI_REMARS3");
+        double lat = rs.getDouble("LAT");
+        double lnt = rs.getDouble("LNT");
+        String workDttm = rs.getString("WORK_DTTM");
+
+        return new WifiInfo(mgrNo, wrdofc, mainNm, adres1, adres2, instlFloor, instlTy,
+                instlMby, svcSe, cmcwr, cnstcYear, inoutDoor, remars3, lat, lnt, workDttm);
+    }
 }
