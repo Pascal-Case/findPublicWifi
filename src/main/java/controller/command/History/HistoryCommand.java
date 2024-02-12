@@ -21,9 +21,15 @@ public class HistoryCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        // wifi 데이터 가져오기
-        List<History> historyList = historyService.getHistory();
+        List<History> historyList = null;
+        try {
+            historyList = historyService.getHistory();
+            request.setAttribute("success", true);
+            request.setAttribute("message", "히스토리 리스트를 성공적으로 가져왔습니다.");
+        } catch (RuntimeException e) {
+            request.setAttribute("success", false);
+            request.setAttribute("message", e.getMessage());
+        }
 
         request.setAttribute("historyList", historyList);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/history/history.jsp");

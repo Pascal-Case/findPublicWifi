@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryService {
@@ -19,7 +18,7 @@ public class HistoryService {
      * @return 히스토리 리스트
      */
     public List<History> getHistory() {
-        List<History> historyList = new ArrayList<>();
+        List<History> historyList;
 
         try (Connection conn = DbUtil.getConnection()) {
             HistoryDao historyDao = new HistoryDao();
