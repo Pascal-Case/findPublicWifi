@@ -5,11 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>공공 와이파이 </title>
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/resources/css/general.css">
-    <%--    <link rel="stylesheet"--%>
-    <%--          href="${pageContext.request.contextPath}/resources/css/home.css">--%>
 </head>
 <body>
 <header>

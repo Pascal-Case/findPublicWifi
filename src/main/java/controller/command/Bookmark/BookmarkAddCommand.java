@@ -18,11 +18,14 @@ public class BookmarkAddCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         String bookmarkGroupId = request.getParameter("bookmarkGroupId");
         String wifiMgrNo = request.getParameter("wifiMgrNo");
+
+        System.out.println(wifiMgrNo);
 
         JsonObject jsonResponse = new JsonObject();
         try {
